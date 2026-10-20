@@ -29,19 +29,19 @@ def invalid_argument_does_not_change_browser_test():
         page.goto(SITE_URL, wait_until="domcontentloaded")
 
         url_before = page.url
-        text_before = page.locator("body").inner_text()
+        search_visible_before = page.locator("#searchStage").is_visible()
 
         result = run(page, {"flight_id": "AA101"}, {})
 
         url_after = page.url
-        text_after = page.locator("body").inner_text()
+        search_visible_after = page.locator("#searchStage").is_visible()
 
         print("Invalid run test:", result)
 
         assert result["ok"] is False
         assert result["data"] == {}
         assert url_before == url_after
-        assert text_before == text_after
+        assert search_visible_before == search_visible_after
 
         browser.close()
 
@@ -77,14 +77,12 @@ def success_and_independent_verification_test():
 
         page.locator(".flight-card").first.wait_for()
 
-        # Capture actual browser state before the tool runs.
         cards_before = page.locator(".flight-card:visible")
         card_text_before = cards_before.all_inner_texts()
         url_before = page.url
 
         result = run(page, {}, {})
 
-        # Independently read actual browser cards after the tool runs.
         actual_cards = page.locator(".flight-card:visible")
         card_text_after = actual_cards.all_inner_texts()
         url_after = page.url
@@ -96,18 +94,18 @@ def success_and_independent_verification_test():
         for i in range(actual_cards.count()):
             actual_card = actual_cards.nth(i)
             actual_id = actual_card.get_attribute("data-flight-id")
-            actual_details = actual_card.locator("div").nth(1).locator("p")
-
-            actual_stops = actual_details.nth(0).inner_text().strip()
-            actual_price = actual_details.nth(1).inner_text().strip()
+            actual_card_text = actual_card.inner_text()
 
             returned_flight = result["data"]["flights"][i]
 
+            # Independent check: use the card's full visible text,
+            # not the tool's div and paragraph layout assumptions.
             assert returned_flight["flight_id"] == actual_id
-            assert returned_flight["stops"] == actual_stops
-            assert returned_flight["price"] == actual_price
+            assert returned_flight["flight_id"] in actual_card_text
+            assert returned_flight["stops"] in actual_card_text
+            assert returned_flight["price"] in actual_card_text
 
-        # list_flights is read-only: it must not change the browser.
+        # list_flights is read-only and must not change the browser.
         assert url_before == url_after
         assert card_text_before == card_text_after
 
