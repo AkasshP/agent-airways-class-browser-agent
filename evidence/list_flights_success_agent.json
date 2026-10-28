@@ -1,0 +1,63 @@
+{
+  "tool": "list_flights",
+  "case": "success",
+  "request": "Read the available flights, including their prices and stops.",
+  "stop_reason": "success",
+  "used_team_tool": true,
+  "last_team_tool_ok": true,
+  "trace": [
+    {
+      "step": 1,
+      "model_reply": "{\"action\":\"list_flights\",\"argument\":{}}",
+      "action": "list_flights",
+      "argument": {},
+      "observation": {
+        "ok": true,
+        "message": "Read 4 visible flight cards.",
+        "data": {
+          "flights": [
+            {
+              "flight_id": "AA101",
+              "stops": "Nonstop",
+              "price": "$129 per passenger"
+            },
+            {
+              "flight_id": "AA205",
+              "stops": "Nonstop",
+              "price": "$156 per passenger"
+            },
+            {
+              "flight_id": "AA317",
+              "stops": "1 stop",
+              "price": "$118 per passenger"
+            },
+            {
+              "flight_id": "AA422",
+              "stops": "Nonstop",
+              "price": "$141 per passenger"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "step": 2,
+      "model_reply": "{\"action\":\"done\",\"argument\":{\"status\":\"success\",\"reason\":\"Available flights, including their prices and stops, have been successfully read.\"}}",
+      "action": "done",
+      "argument": {
+        "status": "success",
+        "reason": "Available flights, including their prices and stops, have been successfully read."
+      },
+      "final_reason": "Available flights, including their prices and stops, have been successfully read."
+    }
+  ],
+  "final_page": {
+    "ok": true,
+    "message": "Browser observation",
+    "data": {
+      "url": "https://onyourmark.github.io/browser-agent-form/travel/#results",
+      "stage": "results",
+      "visible_text": "2. Choose a flight\n\nDCA to BOS on 2026-11-03 for 1 passenger(s).\n\nAA101\n\nDCA → BOS\n\n8:10 AM – 9:35 AM\n\nNonstop\n\n$129 per passenger\n\nFlight details\nChoose AA101\nAA205\n\nDCA → BOS\n\n11:40 AM – 1:10 PM\n\nNonstop\n\n$156 per passenger\n\nFlight details\nChoose AA205\nAA317\n\nDCA → BOS\n\n3:20 PM – 5:05 PM\n\n1 stop\n\n$118 per passenger\n\nFlight details\nChoose AA317\nAA422\n\nDCA → BOS\n\n7:05 PM – 8:40 PM\n\nNonstop\n\n$141 per passenger\n\nFlight details\nChoose AA422\nTravel alert: weather information"
+    }
+  }
+}

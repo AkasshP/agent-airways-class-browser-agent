@@ -1,0 +1,42 @@
+{
+  "tool": "list_flights",
+  "case": "failure",
+  "request": "Attempt to list available flights before any search has been performed. Do not invent flight results.",
+  "stop_reason": "unable",
+  "used_team_tool": true,
+  "last_team_tool_ok": false,
+  "trace": [
+    {
+      "step": 1,
+      "model_reply": "{\"action\":\"list_flights\",\"argument\":{}}",
+      "action": "list_flights",
+      "argument": {},
+      "observation": {
+        "ok": false,
+        "message": "Flight results are not ready. Search for flights first.",
+        "data": {
+          "flights": []
+        }
+      }
+    },
+    {
+      "step": 2,
+      "model_reply": "{\"action\":\"done\",\"argument\":{\"status\":\"unable\",\"reason\":\"Flight results are not ready. Search for flights first.\"}}",
+      "action": "done",
+      "argument": {
+        "status": "unable",
+        "reason": "Flight results are not ready. Search for flights first."
+      },
+      "final_reason": "Flight results are not ready. Search for flights first."
+    }
+  ],
+  "final_page": {
+    "ok": true,
+    "message": "Browser observation",
+    "data": {
+      "url": "https://onyourmark.github.io/browser-agent-form/travel/#search",
+      "stage": "search",
+      "visible_text": "1. Search for a flight\nFrom\nChoose an airport\nWashington Reagan (DCA)\nBoston (BOS)\nNew York JFK (JFK)\nChicago O'Hare (ORD)\nAtlanta (ATL)\nTo\nChoose an airport\nWashington Reagan (DCA)\nBoston (BOS)\nNew York JFK (JFK)\nChicago O'Hare (ORD)\nAtlanta (ATL)\nDeparture date\nPassengers\n1 passenger\n2 passengers\n3 passengers\n\nSearch flights"
+    }
+  }
+}
